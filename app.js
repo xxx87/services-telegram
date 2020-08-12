@@ -10,7 +10,6 @@ const port = process.env.PORT || 3343;
 
 const TelegramBot = require("node-telegram-bot-api");
 const express = require("express");
-
 // No need to pass any parameters as we will handle the updates with Express
 const bot = new TelegramBot(TOKEN);
 
