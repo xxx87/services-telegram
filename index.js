@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 
 // Create a bot that uses 'polling' to fetch new updates
@@ -16,6 +16,13 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
   // send back the matched "whatever" to the chat
   bot.sendMessage(chatId, resp);
 });
+bot.onText(/\/start/, (msg) => {
+  bot.sendMessage(msg.chat.id, "Welcome", {
+    reply_markup: {
+      keyboard: [["Sample text", "Second sample"], ["Keyboard"], ["I'm robot"]]
+    }
+  });
+});
 
 // Listen for any kind of message. There are different kinds of
 // messages.
@@ -23,5 +30,5 @@ bot.on("message", (msg) => {
   const chatId = msg.chat.id;
 
   // send a message to the chat acknowledging receipt of their message
-  bot.sendMessage(chatId, "Received your message");
+  bot.sendMessage(chatId, "Received your message: " + msg.text);
 });
