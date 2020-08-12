@@ -1,10 +1,8 @@
+require('dotenv').config();
 const TelegramBot = require("node-telegram-bot-api");
 
-// replace the value below with the Telegram token you receive from @BotFather
-const token = "1331735307:AAGmlqWLxxmmp3fEbI8GDQJBDebd5JgNGTA";
-
 // Create a bot that uses 'polling' to fetch new updates
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
 // Matches "/echo [whatever]"
 bot.onText(/\/echo (.+)/, (msg, match) => {

@@ -3,8 +3,8 @@
  * updates in your express app
  */
 /* eslint-disable no-console */
-
-const TOKEN = process.env.TELEGRAM_TOKEN || "1331735307:AAGmlqWLxxmmp3fEbI8GDQJBDebd5JgNGTA";
+require("dotenv").config();
+const TOKEN = process.env.BOT_TOKEN;
 const url = "https://services-telegram.ddns.net/";
 const port = process.env.PORT || 3343;
 
