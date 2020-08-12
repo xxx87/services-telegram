@@ -54,5 +54,6 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
 
 // Just to ping!
 bot.on("message", (msg) => {
+  console.log('msg >> ', msg);
   bot.sendMessage(msg.chat.id, "I am alive!");
 });
