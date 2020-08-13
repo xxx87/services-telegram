@@ -5,7 +5,7 @@
 /* eslint-disable no-console */
 require("dotenv").config();
 const TOKEN = process.env.BOT_TOKEN;
-const url = "https://services-telegram.ddns.net/";
+const url = process.env.URL_WEBHOOK;
 const port = process.env.PORT || 3343;
 
 const TelegramBot = require("node-telegram-bot-api");
