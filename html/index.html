@@ -3,16 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Telegram Button</title>
   </head>
   <body>
-    <div>
-      <a
-      href="tg://resolve?domain=@Personal_service_bot"
+    <script type="text/javascript">
+      (function () {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = "//telegram.im/widget-button/index.php?id=@Personal_service_bot";
+        document.getElementsByTagName("head")[0].appendChild(script);
+      })();
+    </script>
+    <a
+      href="tg://resolve?domain=Personal_service_bot"
       class="telegramim_button telegramim_shadow telegramim_pulse"
       style="
-        font-size: 26px;
-        width: 48px;
+        font-size: 27px;
+        width: 49px;
         background: #27a5e7;
         box-shadow: 1px 1px 5px #27a5e7;
         color: #ffffff;
@@ -20,9 +28,6 @@
       "
       title=""
       ><i></i
-    >FFFFF</a>
-    </div>
-
-    <div data-services=”telegram”>gggg</div>
+    ></a>
   </body>
 </html>
