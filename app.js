@@ -1,5 +1,5 @@
 /**
- * This example demonstrates setting up a webook, and receiving
+ * This example demonstrates setting up a webhook, and receiving
  * updates in your express app
  */
 /* eslint-disable no-console */
