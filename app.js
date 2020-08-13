@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require('path');
 const TelegramBot = require("node-telegram-bot-api");
 const express = require("express");
 const app = express();
@@ -24,7 +25,7 @@ switch (workingMode) {
 }
 
 app.get(`/tele`, (req, res) => {
-  res.sendFile('./html/index.html');
+  res.sendFile(path.join(__dirname+'/html/index.html'));
 });
 app.post(`/bot${TOKEN}`, (req, res) => {
   // console.log("app.post - bot: ", req.body);
