@@ -17,7 +17,42 @@ const bot = new Telegraf(TOKEN);
 // bot.command("hipster", Telegraf.reply("λ"));
 // bot.launch();
 
-bot.use(Telegraf.log());
+// bot.use(Telegraf.log());
+
+bot.use(async (ctx, next) => {
+  const start = new Date();
+  await next();
+  const ms = new Date() - start;
+  console.log("Response time: %sms", ms);
+});
+
+// bot.use((ctx, next) => {
+//   console.log(2, ctx.message);
+//   next();
+// });
+bot.context.db = {
+  getScores: () => {
+    return 42;
+  }
+};
+
+bot.use((ctx, next) => {
+  ctx.state.role = getUserRole(ctx.message)
+  return next()
+})
+
+bot.on('text', (ctx) => {
+  return ctx.reply(`Hello ${ctx.state.role}`)
+})
+
+// bot.on("text", async (ctx, next) => {
+//   const scores = ctx.db.getScores(ctx.message.from.username);
+//   console.log(await ctx.getMyCommands());
+//   ctx.reply(`${ctx.message.from.username}: ${await ctx.getMyCommands()}`);
+//   next();
+// });
+
+// bot.on('text', (ctx) => ctx.reply('Hello World'))
 
 bot.command("onetime", ({ reply }) =>
   reply("One time keyboard", Markup.keyboard(["/simple", "/inline", "/pyramid"]).oneTime().resize().extra())
