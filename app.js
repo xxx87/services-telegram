@@ -2,6 +2,7 @@ require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 const express = require("express");
 const app = express();
+const { spawn, exec } = require("child_process");
 const TOKEN = process.env.BOT_TOKEN;
 const urlWebHook = process.env.URL_WEBHOOK;
 const port = process.env.PORT || 3343;
@@ -63,8 +64,15 @@ bot.on("message", (msg) => {
   if (msg.text === "start") {
     bot.sendMessage(msg.chat.id, "Welcome", {
       reply_markup: {
-        keyboard: [["Кнопка 1", "Кнопка 2"], ["Кнопка 3"], ["Кнопка 4"]]
+        keyboard: [["Кнопка 1", "Кнопка 2"], ["Кнопка 3"], ["reboot"]]
       }
+    });
+  } else if (msg.text === "reboot") {
+    exec(`pm2 restart services-telegram`, function (err, stdout, stderr) {
+      if (err) {
+        console.error(err);
+      }
+      console.log("Success bot reboot!");
     });
   } else {
     bot.sendMessage(chatId, "Received your message: " + msg.text);
