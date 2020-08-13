@@ -29,11 +29,12 @@ app.post(`/bot${TOKEN}`, (req, res) => {
 });
 
 app.listen(port, () => {
-  if (adminChatId) bot.sendMessage(adminChatId, "Server started successfully. Telegram Bot working!", {
-    reply_markup: {
-      keyboard: [["start"]]
-    }
-  });
+  if (adminChatId)
+    bot.sendMessage(adminChatId, "Server started successfully. Telegram Bot working!", {
+      reply_markup: {
+        keyboard: [["start"]]
+      }
+    });
   console.log(`Express server is listening on ${port}`);
 });
 // Matches "/echo [whatever]"
@@ -58,6 +59,14 @@ bot.onText(/\/start/, (msg) => {
 bot.on("message", (msg) => {
   const chatId = msg.chat.id;
   // send a message to the chat acknowledging receipt of their message
-  console.log("Button pressed: ", msg.text);
-  bot.sendMessage(chatId, "Received your message: " + msg.text);
+  // console.log("Button pressed: ", msg.text);
+  if (msg.text === "start") {
+    bot.sendMessage(msg.chat.id, "Welcome", {
+      reply_markup: {
+        keyboard: [["Кнопка 1", "Кнопка 2"], ["Кнопка 3"], ["Кнопка 4"]]
+      }
+    });
+  } else {
+    bot.sendMessage(chatId, "Received your message: " + msg.text);
+  }
 });
