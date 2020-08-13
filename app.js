@@ -23,6 +23,9 @@ switch (workingMode) {
     break;
 }
 
+app.get(`/tele`, (req, res) => {
+  res.sendFile('./html/index.html');
+});
 app.post(`/bot${TOKEN}`, (req, res) => {
   // console.log("app.post - bot: ", req.body);
   bot.processUpdate(req.body);
