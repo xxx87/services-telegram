@@ -15,6 +15,17 @@ expressApp.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+bot.use(async (ctx, next) => {
+  const start = new Date();
+  await next();
+  const ms = new Date() - start;
+  console.log("Response time: %sms", ms);
+});
+
+bot.on('text', (ctx) => {
+  return ctx.reply(`Hello ${ctx.message}`)
+})
+
 expressApp.listen(port, () => {
   console.log(`Example app listening on port: ${port}`);
 });

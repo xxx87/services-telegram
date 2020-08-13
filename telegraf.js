@@ -36,10 +36,10 @@ bot.context.db = {
   }
 };
 
-bot.use((ctx, next) => {
-  ctx.state.role = getUserRole(ctx.message)
-  return next()
-})
+// bot.use((ctx, next) => {
+//   ctx.state.role = getUserRole(ctx.message)
+//   return next()
+// })
 
 bot.on('text', (ctx) => {
   return ctx.reply(`Hello ${ctx.state.role}`)
