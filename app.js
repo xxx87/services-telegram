@@ -1,4 +1,5 @@
 //Express.js example integration   app_telegraf
+require("dotenv").config();
 const TOKEN = process.env.BOT_TOKEN;
 const port = process.env.PORT || 3343;
 const urlWebHook = process.env.URL_WEBHOOK;
