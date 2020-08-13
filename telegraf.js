@@ -108,20 +108,20 @@ bot.action("Dr Pepper", (ctx, next) => {
   return ctx.reply("👍").then(() => next());
 });
 
-bot.action("Plain", async (ctx) => {
-  await ctx.answerCbQuery();
-  await ctx.editMessageCaption(
-    "Caption",
-    Markup.inlineKeyboard([Markup.callbackButton("Plain", "Plaint"), Markup.callbackButton("Italic", "Italict")])
-  );
-});
+// bot.action("Plain", async (ctx) => {
+//   await ctx.answerCbQuery();
+//   await ctx.editMessageCaption(
+//     "Caption",
+//     Markup.inlineKeyboard([Markup.callbackButton("Plain", "Plaint"), Markup.callbackButton("Italic", "Italict")])
+//   );
+// });
 
 bot.action("Italic", async (ctx) => {
   await ctx.answerCbQuery();
   await ctx.editMessageCaption(
     "_Caption_",
     Extra.markdown().markup(
-      Markup.inlineKeyboard([Markup.callbackButton("Plain", "Plaink"), Markup.callbackButton("* Italic *", "Italick")])
+      Markup.inlineKeyboard([Markup.callbackButton("_Plain_", "Plain"), Markup.callbackButton("* Italic *", "Italic")])
     )
   );
 });
