@@ -6,7 +6,7 @@ const TOKEN = process.env.BOT_TOKEN;
 const urlWebHook = process.env.URL_WEBHOOK;
 const port = process.env.PORT || 3343;
 const workingMode = process.env.MODE || "polling";
-
+const adminChatId = process.env.ADM_CHAT_ID || null;
 app.use(express.json());
 
 let bot;
@@ -23,12 +23,17 @@ switch (workingMode) {
 }
 
 app.post(`/bot${TOKEN}`, (req, res) => {
-  console.log("app.post - bot: ", req.body);
+  // console.log("app.post - bot: ", req.body);
   bot.processUpdate(req.body);
   res.sendStatus(200);
 });
 
 app.listen(port, () => {
+  if (adminChatId) bot.sendMessage(adminChatId, "Server started successfully. Telegram Bot working!", {
+    reply_markup: {
+      keyboard: [["start"]]
+    }
+  });
   console.log(`Express server is listening on ${port}`);
 });
 // Matches "/echo [whatever]"
