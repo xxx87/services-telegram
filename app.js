@@ -1,27 +1,7 @@
 require("dotenv").config();
-const TOKEN = process.env.BOT_TOKEN;
-const urlWebHook = process.env.URL_WEBHOOK;
-const { Telegraf } = require("telegraf");
-const express = require("express");
 const port = process.env.PORT || 3343;
-const app = express();
-const workingMode = process.env.MODE || "polling";
-
-const bot = new Telegraf(TOKEN);
-switch (workingMode) {
-  case "polling":
-    console.log("Polling mode...");
-    bot.telegram.deleteWebhook();
-    bot.startPolling()
-    break;
-  case "webhook":
-    console.log("Webhook mode...");
-    app.use(bot.webhookCallback(`/bot${TOKEN}`));
-    bot.telegram.setWebhook(`${urlWebHook}/bot${TOKEN}`);
-    break;
-  default:
-    break;
-}
+const app = require("./src/services/express");
+const { bot, Extra, Markup } = require("./src/telega");
 
 app.get("/", async (req, res) => {
   res.send(await bot.telegram.getWebhookInfo());
