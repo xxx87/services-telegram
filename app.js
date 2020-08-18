@@ -1,12 +1,22 @@
 require("dotenv").config();
 const port = process.env.PORT || 3343;
+const pathToNewTorrent = process.env.PATH_NEW_TORRENT;
 const app = require("./src/services/express");
 const download = require("./src/services/download");
 const { bot, Extra, Markup } = require("./src/telega");
+const tm = require("./src/services/transmission");
 
 app.get("/", async (req, res) => {
   res.sendStatus(200);
 });
+
+app.get("/downloadComplete/:id", async (req, res) => {
+  let fileID = req.params.id;
+  console.log("downloadComplete ID: ", fileID);
+  if (fileID) tm.getTorrentDetails(fileID);
+  res.sendStatus(200);
+});
+tm.getTransmissionStats();
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
@@ -28,7 +38,8 @@ bot.on("document", async (ctx, next) => {
     // ctx.telegram.deleteMessage(ctx.message.chat.id, ctx.message.message_id);
     console.log("document ctx: ", ctx.message);
     ctx.telegram.getFileLink(docInfo.file_id).then(async (url) => {
-      await download(url, `C:/Users/xxx87/Desktop/trans/add/${fullName}`);
+      tm.addTorrent(url);
+      // await download(url, `${pathToNewTorrent}${fullName}`);
       // console.log(11, url);
       ctx.reply(`Torrent File "${truncName}" Download Start... `);
     });
