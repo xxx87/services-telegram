@@ -5,8 +5,8 @@ const Transmission = require("transmission");
 let transmission = new Transmission({
   port: 9091, // DEFAULT : 9091
   host: transmissionHost, // DEAFULT : 127.0.0.1
-  username: "", // "transmission", // DEFAULT : BLANK
-  password: "" //"{8de3ee1ce95b64ad82efb6eca47df60e4f29f85182yQQVWx" // DEFAULT : BLANK
+  username: "",// "transmission", // DEFAULT : BLANK
+  password: "", //"{8de3ee1ce95b64ad82efb6eca47df60e4f29f85182yQQVWx" // DEFAULT : BLANK
 });
 
 module.exports = {
@@ -35,35 +35,22 @@ module.exports = {
 
   // Get various stats about a torrent in the queue
   getTorrentDetails: async function (id) {
-    transmission
-      .get()
-      .then((res) => {
-        console.log("RES: ", res);
-        // for (const torrent of res.torrents) {
-        //   if (torrent.status === transmission.status.STOPPED) {
-        //     transmission.remove(torrent.id).then(() => {
-        //       console.log(`${torrent.name} removed!`);
-        //     });
-        //   }
-        // }
-      })
-      .catch((err) => console.error(err));
-    // await transmission.get(id, function (err, result) {
-    //   console.log(id);
-    //   console.log(result);
-    //   if (err) {
-    //     console.log("getTorrentDetails error: ", err);
-    //   }
-    //   if (result.torrents.length > 0) {
-    //     // console.log(result.torrents[0]);			// Gets all details
-    //     console.log("Name = " + result.torrents[0].name);
-    //     console.log("Download Rate = " + result.torrents[0].rateDownload / 1000);
-    //     console.log("Upload Rate = " + result.torrents[0].rateUpload / 1000);
-    //     console.log("Completed = " + result.torrents[0].percentDone * 100);
-    //     console.log("ETA = " + result.torrents[0].eta / 3600);
-    //     console.log("Status = " + getStatusType(result.torrents[0].status));
-    //   }
-    // });
+    await transmission.get(id, function (err, result) {
+      console.log(id);
+      console.log(result);
+      if (err) {
+        console.log("getTorrentDetails error: ", err);
+      }
+      if (result.torrents.length > 0) {
+        // console.log(result.torrents[0]);			// Gets all details
+        console.log("Name = " + result.torrents[0].name);
+        console.log("Download Rate = " + result.torrents[0].rateDownload / 1000);
+        console.log("Upload Rate = " + result.torrents[0].rateUpload / 1000);
+        console.log("Completed = " + result.torrents[0].percentDone * 100);
+        console.log("ETA = " + result.torrents[0].eta / 3600);
+        console.log("Status = " + getStatusType(result.torrents[0].status));
+      }
+    });
   },
 
   deleteTorrent: function (id) {
