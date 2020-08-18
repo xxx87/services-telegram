@@ -11,20 +11,18 @@ const bot = new Telegraf(TOKEN);
 switch (workingMode) {
   case "polling":
     console.log("Polling mode...");
-    bot.telegram.deleteWebhook();
-    bot.telegram.startPolling()
     break;
   case "webhook":
     console.log("Webhook mode...");
     app.use(bot.webhookCallback(`/bot${TOKEN}`));
-    bot.telegram.setWebHook(`${urlWebHook}/bot${TOKEN}`);
+    bot.setWebHook(`${urlWebHook}/bot${TOKEN}`);
     break;
   default:
     break;
 }
 
 app.get("/", async (req, res) => {
-  res.send(await bot.telegram.getWebhookInfo());
+  res.send("HELLO WORLD!");
 });
 
 app.listen(port, () => {
