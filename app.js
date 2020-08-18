@@ -17,7 +17,7 @@ switch (workingMode) {
   case "webhook":
     console.log("Webhook mode...");
     app.use(bot.webhookCallback(`/bot${TOKEN}`));
-    bot.setWebHook(`${urlWebHook}/bot${TOKEN}`);
+    bot.telegram.setWebHook(`${urlWebHook}/bot${TOKEN}`);
     break;
   default:
     break;
