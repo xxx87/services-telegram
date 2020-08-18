@@ -26,11 +26,11 @@ app.get(`/tele/:code/`, async (req, res) => {
     res.send("Error");
   }
 });
-app.post(`/bot${TOKEN}`, (req, res) => {
-  // console.log("app.post - bot: ", req.body);
-  bot.telegram.processUpdate(req.body);
-  res.sendStatus(200);
-});
+// app.post(`/bot${TOKEN}`, (req, res) => {
+//   // console.log("app.post - bot: ", req.body);
+//   bot.telegram.processUpdate(req.body);
+//   res.sendStatus(200);
+// });
 
 bot.use(async (ctx, next) => {
   // console.log("CTX >>>>>> > ", ctx.update.message.document);
