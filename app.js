@@ -212,7 +212,7 @@ function startDevMode(botInst) {
 }
 
 function startProdMode(botInst) {
-  botInst.setWebhook(`${urlWebHook}/bot${TOKEN}`);
+  bot.setWebhook(`${urlWebHook}/bot${TOKEN}`);
   // await bot.startWebhook(`${TOKEN}`);
   // await bot.startWebhook(`/${process.env.TELEGRAM_TOKEN}`, tlsOptions, +process.env.WEBHOOK_PORT);
   const webhookStatus = botInst.getWebhookInfo();
