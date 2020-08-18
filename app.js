@@ -22,8 +22,6 @@ switch (workingMode) {
   default:
     break;
 }
-// app.use(bot.webhookCallback(`/bot${TOKEN}`));
-// bot.telegram.setWebHook(`${urlWebHook}/bot${TOKEN}`);
 
 app.get("/", async (req, res) => {
   res.send(await bot.telegram.getWebhookInfo());
