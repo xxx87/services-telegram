@@ -31,16 +31,6 @@ app.get(`/tele/:code/`, (req, res) => {
 //   res.sendStatus(200);
 // });
 
-app.listen(port, () => {
-  // if (adminChatId)
-  //   bot.sendMessage(adminChatId, "Server started successfully. Telegram Bot working!", {
-  //     reply_markup: {
-  //       keyboard: [["start"]]
-  //     }
-  //   });
-  console.log(`Express server is listening on ${port}`);
-});
-
 bot.use(async (ctx, next) => {
   // console.log("CTX >>>>>> > ", ctx.update.message.document);
   // ctx.telegram.getFileLink(ctx.update.message.document.file_id).then((url) => {
@@ -213,7 +203,7 @@ bot.action(/.+/, (ctx) => {
 function startDevMode(bot) {
   rp(`https://api.telegram.org/bot${TOKEN}/deleteWebhook`)
     .then(() => bot.startPolling())
-    .catch(err => {
+    .catch((err) => {
       console.log("EROOR! : ", err);
     });
 }
@@ -225,3 +215,13 @@ async function startProdMode(bot) {
   console.log("Webhook status1 ", webhookStatus);
   console.log("Webhook status2 ", bot);
 }
+
+app.listen(port, () => {
+  if (adminChatId)
+    bot.telegram.sendMessage(adminChatId, "Server started successfully. Telegram Bot working!", {
+      reply_markup: {
+        keyboard: [["start"]]
+      }
+    });
+  console.log(`Express server is listening on ${port}`);
+});
