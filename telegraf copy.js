@@ -1,23 +1,21 @@
 require("dotenv").config();
 const TOKEN = process.env.BOT_TOKEN;
 const Telegraf = require("telegraf");
+const Transmission = require("transmission");
 const Extra = require("telegraf/extra");
 const Markup = require("telegraf/markup");
-
+const url = require("url");
 const bot = new Telegraf(TOKEN);
+const fs = require("fs");
+const https = require("https");
+const request = require("request");
 
-// bot.start((ctx) => ctx.reply("Welcome"));
-// bot.help((ctx) => ctx.reply("Send me a sticker"));
-// bot.on("sticker", (ctx) => ctx.reply("👍"));
-// bot.hears("hi", (ctx) => ctx.reply("Hey there"));
-// bot.launch();
-
-// bot.command("oldschool", (ctx) => ctx.reply("Hello"));
-// bot.command("modern", ({ reply }) => reply("Yo"));
-// bot.command("hipster", Telegraf.reply("λ"));
-// bot.launch();
-
-// bot.use(Telegraf.log());
+transmission = new Transmission({
+  port: 9091, // DEFAULT : 9091
+  host: "127.0.0.1", // DEAFULT : 127.0.0.1
+  username: "", // DEFAULT : BLANK
+  password: "" // DEFAULT : BLANK
+});
 
 bot.use(async (ctx, next) => {
   const start = new Date();
@@ -26,31 +24,21 @@ bot.use(async (ctx, next) => {
   console.log("Response time: %sms", ms);
 });
 
-// bot.use((ctx, next) => {
-//   console.log(2, ctx.message);
-//   next();
-// });
-bot.context.db = {
-  getScores: () => {
-    return 42;
+bot.on("document", async (ctx, next) => {
+  let docInfo = ctx.update.message.document;
+  let docType = docInfo.mime_type;
+  if (docType === "application/x-bittorrent") {
+    ctx.telegram.deleteMessage(ctx.message.chat.id, ctx.message.message_id);
+    console.log("document ctx: ", ctx.message);
+    ctx.reply(`Torrent File Download Start... `);
   }
-};
 
-// bot.use((ctx, next) => {
-//   ctx.state.role = getUserRole(ctx.message)
-//   return next()
-// })
-
-bot.on('text', (ctx) => {
-  return ctx.reply(`Hello ${ctx.state.role}`)
-})
-
-// bot.on("text", async (ctx, next) => {
-//   const scores = ctx.db.getScores(ctx.message.from.username);
-//   console.log(await ctx.getMyCommands());
-//   ctx.reply(`${ctx.message.from.username}: ${await ctx.getMyCommands()}`);
-//   next();
-// });
+  next();
+});
+bot.on("text", async (ctx, next) => {
+  ctx.reply(`${ctx.message.text}`);
+  next();
+});
 
 // bot.on('text', (ctx) => ctx.reply('Hello World'))
 
