@@ -24,6 +24,13 @@ switch (workingMode) {
     break;
 }
 
+bot.use(async (ctx, next) => {
+  const start = new Date();
+  await next();
+  const ms = new Date() - start;
+  console.log("Response time: %sms", ms);
+});
+
 app.get(`/tele/:code/`, (req, res) => {
   if (req.params.code === adminChatId) {
     res.sendFile(path.join(__dirname + "/html/index.html"));
