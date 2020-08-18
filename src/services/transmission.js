@@ -37,6 +37,8 @@ module.exports = {
   // Get various stats about a torrent in the queue
   getTorrentDetails: function (id) {
     transmission.get(id, function (err, result) {
+      console.log(id);
+      console.log(result);
       if (err) {
         console.log("getTorrentDetails error: ", err);
       }
