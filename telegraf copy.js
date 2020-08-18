@@ -18,31 +18,10 @@ transmission = new Transmission({
 });
 
 bot.use(async (ctx, next) => {
-  // console.log("CTX >>>>>> > ", ctx.update.message.document);
-  // ctx.telegram.getFileLink(ctx.update.message.document.file_id).then((url) => {
-  //   console.log(11, url);
-  //   // axios({url, responseType: 'stream'}).then(response => {
-  //   //     return new Promise((resolve, reject) => {
-  //   //         response.data.pipe(fs.createWriteStream(`${config.basePath}/public/images/profiles/${ctx.update.message.from.id}.jpg`))
-  //   //                     .on('finish', () => /* File is saved. */)
-  //   //                     .on('error', e => /* An error has occured */)
-  //   //             });
-  //   //         })
-  // });
-  // ctx.telegram.getFile(ctx.update.message.document.file_id).then((url) => {
-  //   console.log(22, url);
-  //   // axios({url, responseType: 'stream'}).then(response => {
-  //   //     return new Promise((resolve, reject) => {
-  //   //         response.data.pipe(fs.createWriteStream(`${config.basePath}/public/images/profiles/${ctx.update.message.from.id}.jpg`))
-  //   //                     .on('finish', () => /* File is saved. */)
-  //   //                     .on('error', e => /* An error has occured */)
-  //   //             });
-  //   //         })
-  // });
   const start = new Date();
   await next();
   const ms = new Date() - start;
-  // console.log("Response time: %sms", ms);
+  console.log("Response time: %sms", ms);
 });
 
 bot.on("document", async (ctx, next) => {
@@ -57,26 +36,6 @@ bot.on("document", async (ctx, next) => {
   next();
 });
 bot.on("text", async (ctx, next) => {
-  // const current_url = new URL(ctx.message.text);
-  // console.log("current_url >>> ", current_url.href);
-  // const search_params = current_url.searchParams;
-  // const name = search_params.get("name");
-
-  // let resp = await downloadTorrent(current_url.href, `./files/${name}`);
-  // console.log("RESPONSE DOWNLOAD:::: ", resp);
-  // const file = fs.createWriteStream(`./files/${name}`);
-  // const request = https.get(ctx.message.text, function (response) {
-  //   response.pipe(file);
-  // });
-
-  // download(ctx.message.text, `./files/${name}`, function (resp) {
-  //   console.log("done: ", resp);
-  //   move(`./files/${name}`, `C:/Users/xxx87/Desktop/trans/add/${name}`, function () {
-  //     console.log("Move DOne! ");
-  //   });
-  //   // getTransmissionStats();
-  // });
-  // addTorrent(ctx.message.text);
   ctx.reply(`${ctx.message.text}`);
   next();
 });
