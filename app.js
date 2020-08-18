@@ -10,8 +10,8 @@ const bot = new Telegraf(TOKEN);
 expressApp.use(bot.webhookCallback(`/bot${TOKEN}`));
 bot.telegram.setWebhook(`${urlWebHook}/bot${TOKEN}`);
 
-expressApp.get("/", (req, res) => {
-  res.send("Hello World!");
+expressApp.get("/", async (req, res) => {
+  res.send(await bot.telegram.getWebhookInfo());
 });
 
 expressApp.listen(port, () => {
