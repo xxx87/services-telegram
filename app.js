@@ -1,7 +1,7 @@
 require("dotenv").config();
 const path = require("path");
 const TOKEN = process.env.BOT_TOKEN;
-const Telegraf = require("telegraf");
+const { Telegraf } = require("telegraf");
 const express = require("express");
 const app = express();
 const Extra = require("telegraf/extra");
