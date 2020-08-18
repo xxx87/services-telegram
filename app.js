@@ -11,6 +11,8 @@ const bot = new Telegraf(TOKEN);
 switch (workingMode) {
   case "polling":
     console.log("Polling mode...");
+    bot.telegram.deleteWebhook();
+    bot.startPolling()
     break;
   case "webhook":
     console.log("Webhook mode...");
