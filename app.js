@@ -15,22 +15,23 @@ const bot = new Telegraf(TOKEN);
 const rp = require("request-promise");
 
 app.use(express.json());
-app.use(bot.webhookCallback(`/bot${TOKEN}`))
+app.use(bot.webhookCallback(`/bot${TOKEN}`));
+
 workingMode === "webhook" ? startProdMode(bot) : startDevMode(bot);
 
 app.get(`/tele/:code/`, async (req, res) => {
   if (req.params.code === adminChatId) {
-    res.send(await bot.telegram.getWebhookInfo())
+    res.send(await bot.telegram.getWebhookInfo());
     // res.sendFile(path.join(__dirname + "/html/index.html"));
   } else {
     res.send("Error");
   }
 });
-// app.post(`/bot${TOKEN}`, (req, res) => {
-//   // console.log("app.post - bot: ", req.body);
-//   bot.telegram.processUpdate(req.body);
-//   res.sendStatus(200);
-// });
+app.post(`/bot${TOKEN}`, (req, res) => {
+  // console.log("app.post - bot: ", req.body);
+  // bot.telegram.processUpdate(req.body);
+  res.sendStatus(200);
+});
 
 bot.use(async (ctx, next) => {
   // console.log("CTX >>>>>> > ", ctx.update.message.document);
@@ -98,9 +99,10 @@ bot.on("text", async (ctx, next) => {
 
 // bot.on('text', (ctx) => ctx.reply('Hello World'))
 
-bot.command("onetime", ({ reply }) =>
-  reply("One time keyboard", Markup.keyboard(["/simple", "/inline", "/pyramid"]).oneTime().resize().extra())
-);
+bot.command("onetime", ({ reply }) => {
+  console.log("onetime: ");
+  reply("One time keyboard", Markup.keyboard(["/simple", "/inline", "/pyramid"]).oneTime().resize().extra());
+});
 
 bot.command("custom", ({ reply }) => {
   return reply(
