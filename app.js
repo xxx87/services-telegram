@@ -210,7 +210,7 @@ function startDevMode(bot) {
 
 async function startProdMode(bot) {
   await bot.telegram.setWebhook(`${urlWebHook}/bot${TOKEN}`);
-  await bot.telegram.startWebhook(`/${TOKEN}`);
+  await bot.startWebhook(`/${TOKEN}`);
   // await bot.startWebhook(`/${process.env.TELEGRAM_TOKEN}`, tlsOptions, +process.env.WEBHOOK_PORT);
   const webhookStatus = await bot.telegram.getWebhookInfo();
   console.log("Webhook status1 ", webhookStatus);
