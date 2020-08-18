@@ -1,8 +1,10 @@
+require("dotenv").config();
+const transmissionHost = process.env.TRANSMISSION_HOST;
 const Transmission = require("transmission");
 
 let transmission = new Transmission({
   port: 9091, // DEFAULT : 9091
-  host: "192.168.20.40", // DEAFULT : 127.0.0.1
+  host: transmissionHost, // DEAFULT : 127.0.0.1
   username: "transmission", // DEFAULT : BLANK
   password: "{8de3ee1ce95b64ad82efb6eca47df60e4f29f85182yQQVWx" // DEFAULT : BLANK
 });
