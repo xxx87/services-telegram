@@ -8,23 +8,23 @@ const app = express();
 const workingMode = process.env.MODE || "polling";
 
 const bot = new Telegraf(TOKEN);
-// switch (workingMode) {
-//   case "polling":
-//     console.log("Polling mode...");
-//     break;
-//   case "webhook":
-//     console.log("Webhook mode...");
-//     app.use(bot.webhookCallback(`/bot${TOKEN}`));
-//     bot.setWebHook(`${urlWebHook}/bot${TOKEN}`);
-//     break;
-//   default:
-//     break;
-// }
-app.use(bot.webhookCallback(`/bot${TOKEN}`));
-bot.telegram.setWebHook(`${urlWebHook}/bot${TOKEN}`);
+switch (workingMode) {
+  case "polling":
+    console.log("Polling mode...");
+    break;
+  case "webhook":
+    console.log("Webhook mode...");
+    app.use(bot.webhookCallback(`/bot${TOKEN}`));
+    bot.setWebhook(`${urlWebHook}/bot${TOKEN}`);
+    break;
+  default:
+    break;
+}
+// app.use(bot.webhookCallback(`/bot${TOKEN}`));
+// bot.telegram.setWebHook(`${urlWebHook}/bot${TOKEN}`);
 
-app.get("/", (req, res) => {
-  res.send('HELLO');
+app.get("/", async (req, res) => {
+  res.send(await bot.telegram.getWebhookInfo());
 });
 
 app.listen(port, () => {
