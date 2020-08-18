@@ -16,6 +16,7 @@
     "node-telegram-bot-api": "^0.50.0",
     "puid": "^1.0.7",
     "request": "^2.88.2",
+    "request-promise": "^4.2.6",
     "telegraf": "^3.38.0",
     "transmission": "^0.4.10"
   }
