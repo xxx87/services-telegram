@@ -1,56 +1,85 @@
 require("dotenv").config();
 const TOKEN = process.env.BOT_TOKEN;
 const Telegraf = require("telegraf");
+const Transmission = require("transmission");
 const Extra = require("telegraf/extra");
 const Markup = require("telegraf/markup");
-
+const url = require("url");
 const bot = new Telegraf(TOKEN);
+const fs = require("fs");
+const https = require("https");
+const request = require("request");
 
-// bot.start((ctx) => ctx.reply("Welcome"));
-// bot.help((ctx) => ctx.reply("Send me a sticker"));
-// bot.on("sticker", (ctx) => ctx.reply("👍"));
-// bot.hears("hi", (ctx) => ctx.reply("Hey there"));
-// bot.launch();
-
-// bot.command("oldschool", (ctx) => ctx.reply("Hello"));
-// bot.command("modern", ({ reply }) => reply("Yo"));
-// bot.command("hipster", Telegraf.reply("λ"));
-// bot.launch();
-
-// bot.use(Telegraf.log());
+transmission = new Transmission({
+  port: 9091, // DEFAULT : 9091
+  host: "127.0.0.1", // DEAFULT : 127.0.0.1
+  username: "", // DEFAULT : BLANK
+  password: "" // DEFAULT : BLANK
+});
 
 bot.use(async (ctx, next) => {
+  // console.log("CTX >>>>>> > ", ctx.update.message.document);
+  // ctx.telegram.getFileLink(ctx.update.message.document.file_id).then((url) => {
+  //   console.log(11, url);
+  //   // axios({url, responseType: 'stream'}).then(response => {
+  //   //     return new Promise((resolve, reject) => {
+  //   //         response.data.pipe(fs.createWriteStream(`${config.basePath}/public/images/profiles/${ctx.update.message.from.id}.jpg`))
+  //   //                     .on('finish', () => /* File is saved. */)
+  //   //                     .on('error', e => /* An error has occured */)
+  //   //             });
+  //   //         })
+  // });
+  // ctx.telegram.getFile(ctx.update.message.document.file_id).then((url) => {
+  //   console.log(22, url);
+  //   // axios({url, responseType: 'stream'}).then(response => {
+  //   //     return new Promise((resolve, reject) => {
+  //   //         response.data.pipe(fs.createWriteStream(`${config.basePath}/public/images/profiles/${ctx.update.message.from.id}.jpg`))
+  //   //                     .on('finish', () => /* File is saved. */)
+  //   //                     .on('error', e => /* An error has occured */)
+  //   //             });
+  //   //         })
+  // });
   const start = new Date();
   await next();
   const ms = new Date() - start;
-  console.log("Response time: %sms", ms);
+  // console.log("Response time: %sms", ms);
 });
 
-// bot.use((ctx, next) => {
-//   console.log(2, ctx.message);
-//   next();
-// });
-bot.context.db = {
-  getScores: () => {
-    return 42;
+bot.on("document", async (ctx, next) => {
+  let docInfo = ctx.update.message.document;
+  let docType = docInfo.mime_type;
+  if (docType === "application/x-bittorrent") {
+    ctx.telegram.deleteMessage(ctx.message.chat.id, ctx.message.message_id);
+    console.log("document ctx: ", ctx.message);
+    ctx.reply(`Torrent File Download Start... `);
   }
-};
 
-// bot.use((ctx, next) => {
-//   ctx.state.role = getUserRole(ctx.message)
-//   return next()
-// })
+  next();
+});
+bot.on("text", async (ctx, next) => {
+  // const current_url = new URL(ctx.message.text);
+  // console.log("current_url >>> ", current_url.href);
+  // const search_params = current_url.searchParams;
+  // const name = search_params.get("name");
 
-bot.on('text', (ctx) => {
-  return ctx.reply(`Hello ${ctx.state.role}`)
-})
+  // let resp = await downloadTorrent(current_url.href, `./files/${name}`);
+  // console.log("RESPONSE DOWNLOAD:::: ", resp);
+  // const file = fs.createWriteStream(`./files/${name}`);
+  // const request = https.get(ctx.message.text, function (response) {
+  //   response.pipe(file);
+  // });
 
-// bot.on("text", async (ctx, next) => {
-//   const scores = ctx.db.getScores(ctx.message.from.username);
-//   console.log(await ctx.getMyCommands());
-//   ctx.reply(`${ctx.message.from.username}: ${await ctx.getMyCommands()}`);
-//   next();
-// });
+  // download(ctx.message.text, `./files/${name}`, function (resp) {
+  //   console.log("done: ", resp);
+  //   move(`./files/${name}`, `C:/Users/xxx87/Desktop/trans/add/${name}`, function () {
+  //     console.log("Move DOne! ");
+  //   });
+  //   // getTransmissionStats();
+  // });
+  // addTorrent(ctx.message.text);
+  ctx.reply(`${ctx.message.text}`);
+  next();
+});
 
 // bot.on('text', (ctx) => ctx.reply('Hello World'))
 
