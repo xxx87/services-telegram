@@ -4,17 +4,30 @@ const urlWebHook = process.env.URL_WEBHOOK;
 const { Telegraf } = require("telegraf");
 const express = require("express");
 const port = process.env.PORT || 3343;
-const expressApp = express();
+const app = express();
+const workingMode = process.env.MODE || "polling";
 
 const bot = new Telegraf(TOKEN);
-expressApp.use(bot.webhookCallback(`/bot${TOKEN}`));
-bot.telegram.setWebhook(`${urlWebHook}/bot${TOKEN}`);
+switch (workingMode) {
+  case "polling":
+    console.log("Polling mode...");
+    bot.telegram.deleteWebhook();
+    bot.telegram.startPolling()
+    break;
+  case "webhook":
+    console.log("Webhook mode...");
+    app.use(bot.webhookCallback(`/bot${TOKEN}`));
+    bot.setWebHook(`${urlWebHook}/bot${TOKEN}`);
+    break;
+  default:
+    break;
+}
 
-expressApp.get("/", async (req, res) => {
+app.get("/", async (req, res) => {
   res.send(await bot.telegram.getWebhookInfo());
 });
 
-expressApp.listen(port, () => {
+app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
@@ -25,7 +38,7 @@ bot.use(async (ctx, next) => {
   console.log("Response time: %sms", ms);
 });
 
-bot.on("text", async (ctx, next) => {
+bot.on("text", (ctx, next) => {
   ctx.reply(`${ctx.message.text}`);
   next();
 });
