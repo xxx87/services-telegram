@@ -17,7 +17,7 @@ const rp = require("request-promise");
 app.use(express.json());
 app.use(bot.webhookCallback(`/bot${TOKEN}`));
 
-workingMode === "webhook" ? startProdMode(bot) : startDevMode(bot);
+workingMode === "webhook" ? startProdMode(bot.telegram) : startDevMode(bot.telegram);
 
 app.get(`/tele/:code/`, async (req, res) => {
   if (req.params.code === adminChatId) {
@@ -212,7 +212,7 @@ function startDevMode(botInst) {
 }
 
 function startProdMode(botInst) {
-  bot.setWebhook(`${urlWebHook}/bot${TOKEN}`);
+  botInst.setWebhook(`${urlWebHook}/bot${TOKEN}`);
   // await bot.startWebhook(`${TOKEN}`);
   // await bot.startWebhook(`/${process.env.TELEGRAM_TOKEN}`, tlsOptions, +process.env.WEBHOOK_PORT);
   const webhookStatus = botInst.getWebhookInfo();
