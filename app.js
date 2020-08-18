@@ -23,8 +23,8 @@ const bot = new Telegraf(TOKEN);
 app.use(bot.webhookCallback(`/bot${TOKEN}`));
 bot.telegram.setWebHook(`${urlWebHook}/bot${TOKEN}`);
 
-app.get("/", async (req, res) => {
-  res.send(await bot.telegram.getWebhookInfo());
+app.get("/", (req, res) => {
+  res.send('HELLO');
 });
 
 app.listen(port, () => {
