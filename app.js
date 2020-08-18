@@ -18,18 +18,19 @@ app.use(express.json());
 
 workingMode === "webhook" ? startProdMode(bot) : startDevMode(bot);
 
-app.get(`/tele/:code/`, (req, res) => {
+app.get(`/tele/:code/`, async (req, res) => {
   if (req.params.code === adminChatId) {
-    res.sendFile(path.join(__dirname + "/html/index.html"));
+    res.send(await bot.telegram.getWebhookInfo())
+    // res.sendFile(path.join(__dirname + "/html/index.html"));
   } else {
     res.send("Error");
   }
 });
-// app.post(`/bot${TOKEN}`, (req, res) => {
-//   // console.log("app.post - bot: ", req.body);
-//   bot.processUpdate(req.body);
-//   res.sendStatus(200);
-// });
+app.post(`/bot${TOKEN}`, (req, res) => {
+  // console.log("app.post - bot: ", req.body);
+  bot.telegram.processUpdate(req.body);
+  res.sendStatus(200);
+});
 
 bot.use(async (ctx, next) => {
   // console.log("CTX >>>>>> > ", ctx.update.message.document);
