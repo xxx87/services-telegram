@@ -21,10 +21,10 @@ const bot = new Telegraf(TOKEN);
 //     break;
 // }
 app.use(bot.webhookCallback(`/bot${TOKEN}`));
-bot.setWebHook(`${urlWebHook}/bot${TOKEN}`);
+bot.telegram.setWebHook(`${urlWebHook}/bot${TOKEN}`);
 
 app.get("/", async (req, res) => {
-  res.send("HELLO WORLD!");
+  res.send(await bot.telegram.getWebhookInfo());
 });
 
 app.listen(port, () => {
