@@ -1,10 +1,12 @@
+require("dotenv").config();
+const transmissionHost = process.env.TRANSMISSION_HOST;
 const Transmission = require("transmission");
 
 let transmission = new Transmission({
   port: 9091, // DEFAULT : 9091
-  host: "192.168.20.40", // DEAFULT : 127.0.0.1
-  username: "", // DEFAULT : BLANK
-  password: "" // DEFAULT : BLANK
+  host: transmissionHost, // DEAFULT : 127.0.0.1
+  username: "",// "transmission", // DEFAULT : BLANK
+  password: "", //"{8de3ee1ce95b64ad82efb6eca47df60e4f29f85182yQQVWx" // DEFAULT : BLANK
 });
 
 module.exports = {
@@ -21,22 +23,19 @@ module.exports = {
 
   // Add a torrent by passing a URL to .torrent file or a magnet link
   addTorrent: function (url) {
-    transmission.addUrl(
-      url,
-      function (err, result) {
-        if (err) {
-          return console.log("addTorrent error: ", err);
-        }
-        var id = result.id;
-        console.log("Just added a new torrent.");
-        console.log("Torrent ID: " + id);
+    transmission.addUrl(url, function (err, result) {
+      if (err) {
+        return console.log("addTorrent error: ", err);
       }
-    );
+      var id = result.id;
+      console.log("Just added a new torrent.");
+      console.log("Torrent ID: " + id);
+    });
   },
 
   // Get various stats about a torrent in the queue
-  getTorrentDetails: function (id) {
-    transmission.get(id, function (err, result) {
+  getTorrentDetails: async function (id) {
+    await transmission.get(id, function (err, result) {
       console.log(id);
       console.log(result);
       if (err) {

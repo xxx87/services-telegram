@@ -10,10 +10,10 @@ app.get("/", async (req, res) => {
   res.sendStatus(200);
 });
 
-app.get("/downloadComplete/:id", async (req, res) => {
-  let fileID = req.params.id;
+app.post("/downloadComplete", async (req, res) => {
+  let fileID = req.body.id;
   console.log("downloadComplete ID: ", fileID);
-  if (fileID) tm.getTorrentDetails(fileID);
+  if (fileID) await tm.getTorrentDetails(fileID);
   res.sendStatus(200);
 });
 tm.getTransmissionStats();
