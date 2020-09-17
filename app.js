@@ -8,6 +8,7 @@ const tm = require("./src/services/transmission");
 const adminChatId = process.env.ADM_CHAT_ID || null;
 
 app.get("/", async (req, res) => {
+  console.log(0, req.query);
   console.log(1, req.hub_challenge);
   console.log(2, req.hub_verify_token);
   if (adminChatId)
