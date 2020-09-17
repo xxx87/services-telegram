@@ -8,9 +8,6 @@ const tm = require("./src/services/transmission");
 const adminChatId = process.env.ADM_CHAT_ID || null;
 
 app.get("/", async (req, res) => {
-  console.log(0, req.query);
-  console.log(1, req.hub_challenge);
-  console.log(2, req.hub_verify_token);
   if (adminChatId)
     bot.telegram.sendMessage(adminChatId, "Server started successfully. Telegram Bot working!", {
       reply_markup: {
@@ -21,11 +18,24 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/fb/api/v2/birth", async (req, res) => {
+  console.log("GET; REQ.QUERY: ", req.query);
+
   if (req.query["hub.verify_token"] === "EAAMKiWZBOfD4BAG3") {
     res.send(req.query["hub.challenge"]);
   } else {
     res.send("Error, wrong validation token");
   }
+});
+
+app.post("/fb/api/v2/birth", async (req, res) => {
+  console.log("POST; REQ.QUERY: ", req.query);
+  console.log("POST; REQ.BODY: ", req.body);
+  // if (req.query["hub.verify_token"] === "EAAMKiWZBOfD4BAG3") {
+  //   res.send(req.query["hub.challenge"]);
+  // } else {
+  //   res.send("Error, wrong validation token");
+  // }
+  res.sendStatus(200);
 });
 
 app.post("/downloadComplete", async (req, res) => {
