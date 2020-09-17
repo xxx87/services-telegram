@@ -14,7 +14,8 @@ app.get("/", async (req, res) => {
         keyboard: [["start"]]
       }
     });
-  res.sendStatus(200);
+  res.send("1714124244");
+  // res.sendStatus(200);
 });
 
 app.post("/downloadComplete", async (req, res) => {
