@@ -28,8 +28,7 @@ app.get("/fb/api/v2/birth", async (req, res) => {
 });
 
 app.post("/fb/api/v2/birth", async (req, res) => {
-  console.log("POST; REQ.QUERY: ", req.query);
-  console.log("POST; REQ.BODY: ", req.body);
+  console.log("POST; REQ.BODY: ", req.body.user);
   // if (req.query["hub.verify_token"] === "EAAMKiWZBOfD4BAG3") {
   //   res.send(req.query["hub.challenge"]);
   // } else {
