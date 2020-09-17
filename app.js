@@ -8,13 +8,14 @@ const tm = require("./src/services/transmission");
 const adminChatId = process.env.ADM_CHAT_ID || null;
 
 app.get("/", async (req, res) => {
+  console.log(req);
   if (adminChatId)
     bot.telegram.sendMessage(adminChatId, "Server started successfully. Telegram Bot working!", {
       reply_markup: {
         keyboard: [["start"]]
       }
     });
-  res.send(req);
+  res.send("1714124244");
   // res.sendStatus(200);
 });
 
