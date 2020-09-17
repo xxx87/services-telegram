@@ -5,8 +5,15 @@ const app = require("./src/services/express");
 const download = require("./src/services/download");
 const { bot, Extra, Markup } = require("./src/telega");
 const tm = require("./src/services/transmission");
+const adminChatId = process.env.ADM_CHAT_ID || null;
 
 app.get("/", async (req, res) => {
+  if (adminChatId)
+    bot.telegram.sendMessage(adminChatId, "Server started successfully. Telegram Bot working!", {
+      reply_markup: {
+        keyboard: [["start"]]
+      }
+    });
   res.sendStatus(200);
 });
 
