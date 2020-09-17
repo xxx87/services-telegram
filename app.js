@@ -17,8 +17,15 @@ app.get("/", async (req, res) => {
         keyboard: [["start"]]
       }
     });
-  res.send("1714124244");
-  // res.sendStatus(200);
+  res.sendStatus(200);
+});
+
+app.get("/fb/api/v2/birth", async (req, res) => {
+  if (req.query["hub.verify_token"] === "EAAMKiWZBOfD4BAG3") {
+    res.send(req.query["hub.challenge"]);
+  } else {
+    res.send("Error, wrong validation token");
+  }
 });
 
 app.post("/downloadComplete", async (req, res) => {
