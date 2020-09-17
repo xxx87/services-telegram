@@ -28,12 +28,8 @@ app.get("/fb/api/v2/birth", async (req, res) => {
 });
 
 app.post("/fb/api/v2/birth", async (req, res) => {
-  console.log("POST; REQ.BODY: ", req.body);
-  // if (req.query["hub.verify_token"] === "EAAMKiWZBOfD4BAG3") {
-  //   res.send(req.query["hub.challenge"]);
-  // } else {
-  //   res.send("Error, wrong validation token");
-  // }
+  console.log("POST; REQ.BODY: ", req.body.entry);
+  if (adminChatId) bot.telegram.sendMessage(adminChatId, `birth: ${req.body.entry}`);
   res.sendStatus(200);
 });
 
