@@ -8,7 +8,8 @@ const tm = require("./src/services/transmission");
 const adminChatId = process.env.ADM_CHAT_ID || null;
 
 app.get("/", async (req, res) => {
-  console.log(req);
+  console.log(1, req.hub_challenge);
+  console.log(2, req.hub_verify_token);
   if (adminChatId)
     bot.telegram.sendMessage(adminChatId, "Server started successfully. Telegram Bot working!", {
       reply_markup: {
