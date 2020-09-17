@@ -29,7 +29,7 @@ app.get("/fb/api/v2/birth", async (req, res) => {
 
 app.post("/fb/api/v2/birth", async (req, res) => {
   console.log("POST; REQ.BODY: ", req.body.entry);
-  if (adminChatId) bot.telegram.sendMessage(adminChatId, `birth: ${req.body.entry}`);
+  if (adminChatId) bot.telegram.sendMessage(adminChatId, `birth: ${JSON.stringify(req.body.entry)}`);
   res.sendStatus(200);
 });
 
